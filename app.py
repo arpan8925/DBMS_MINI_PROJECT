@@ -1,5 +1,6 @@
 from flask import Flask,flash,render_template,request,g, session, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy,event
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import event
 from forms import  LoginForm, RegistrationForm
 from flask_mail import Mail
 import json, os, math
@@ -18,10 +19,10 @@ from sqlalchemy.engine import Engine
 
 app=Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
-app.config['SQLALCHEMY_ECHO']=True
-app.config["SECRET_KEY"] = "thisismysecretkey#"
+app.config['SQLALCHEMY_ECHO']= True
+app.config["SECRET_KEY"] = "dfdsfadfasdfsadvc3fasd"
 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
@@ -142,7 +143,8 @@ class Payment(db.Model):
     
     
 
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 
 @app.route('/')
